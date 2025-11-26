@@ -1,0 +1,328 @@
+:root {
+    /* Cores principais */
+    --chat-primary: #0d6efd;
+    --chat-primary-dark: #0b5ed7;
+    --chat-bg: #ffffff;
+    --chat-border: #dee2e6;
+    --chat-header-bg: #0d6efd;
+    --chat-header-text: #ffffff;
+    --chat-hover: #f8f9fa;
+
+    /* Cores das mensagens */
+    --chat-message-sent: #0d6efd;
+    --chat-message-sent-text: #ffffff;
+    --chat-message-received: #e9ecef;
+    --chat-message-received-text: #212529;
+}
+
+/* =============================================================================
+   BOTÃO FLUTUANTE
+   =============================================================================
+   Botão circular fixo no canto inferior direito que abre/fecha o chat.
+*/
+
+.chat-toggle-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-color: var(--chat-primary);
+    color: white;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    transition: all 0.2s ease;
+}
+
+.chat-toggle-btn:hover {
+    background-color: var(--chat-primary-dark);
+    transform: scale(1.05);
+}
+
+/* Badge de notificação */
+.chat-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #dc3545;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 0.7rem;
+    min-width: 20px;
+    text-align: center;
+}
+
+/* =============================================================================
+   PAINEL PRINCIPAL
+   =============================================================================
+   Container principal do chat que aparece acima do botão.
+*/
+
+.chat-panel {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    width: 380px;
+    height: 500px;
+    background-color: var(--chat-bg);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Responsividade para mobile */
+@media (max-width: 576px) {
+    .chat-panel {
+        width: calc(100% - 20px);
+        right: 10px;
+        bottom: 80px;
+        height: 60vh;
+    }
+}
+
+/* =============================================================================
+   HEADER DO CHAT
+   ============================================================================= */
+
+.chat-header {
+    background-color: var(--chat-header-bg);
+    color: var(--chat-header-text);
+    padding: 12px;
+    flex-shrink: 0;
+}
+
+.chat-header .form-control {
+    background-color: rgba(255, 255, 255, 0.9);
+    border: none;
+}
+
+/* =============================================================================
+   BUSCA DE USUÁRIOS
+   =============================================================================
+   Dropdown com resultados da busca de usuários.
+*/
+
+.chat-search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--chat-bg);
+    border: 1px solid var(--chat-border);
+    border-radius: 4px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1002;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.chat-search-item {
+    padding: 8px 12px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--chat-border);
+}
+
+.chat-search-item:last-child {
+    border-bottom: none;
+}
+
+.chat-search-item:hover {
+    background-color: var(--chat-hover);
+}
+
+.chat-search-item-nome {
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.chat-search-item-email {
+    font-size: 0.75rem;
+    color: #6c757d;
+}
+
+/* =============================================================================
+   CORPO DO CHAT
+   ============================================================================= */
+
+.chat-body {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+}
+
+/* =============================================================================
+   LISTA DE CONVERSAS
+   =============================================================================
+   Lista de conversas ativas do usuário.
+*/
+
+.chat-conversas-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.chat-conversas-list {
+    flex: 1;
+    overflow-y: auto;
+}
+
+/* Item de conversa na lista */
+.chat-conversa-item {
+    padding: 12px;
+    border-bottom: 1px solid var(--chat-border);
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.chat-conversa-item:hover {
+    background-color: var(--chat-hover);
+}
+
+.chat-conversa-item.active {
+    background-color: #e7f1ff;
+}
+
+.chat-conversa-nome {
+    font-weight: 500;
+    font-size: 0.9rem;
+    margin-bottom: 2px;
+}
+
+.chat-conversa-preview {
+    font-size: 0.8rem;
+    color: #6c757d;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Badge de não lidas na conversa */
+.chat-conversa-badge {
+    background-color: var(--chat-primary);
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 0.7rem;
+    min-width: 20px;
+    text-align: center;
+}
+
+/* =============================================================================
+   ÁREA DE MENSAGENS
+   =============================================================================
+   Container onde as mensagens são exibidas.
+*/
+
+.chat-mensagens-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.chat-conversa-header {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--chat-border);
+    background-color: var(--chat-hover);
+    font-weight: 500;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+
+.chat-mensagens-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* =============================================================================
+   MENSAGENS
+   =============================================================================
+   Estilo dos balões de mensagem.
+*/
+
+.chat-mensagem {
+    max-width: 80%;
+    padding: 8px 12px;
+    border-radius: 12px;
+    word-wrap: break-word;
+}
+
+/* Mensagem enviada (pelo usuário atual) */
+.chat-mensagem-enviada {
+    background-color: var(--chat-message-sent);
+    color: var(--chat-message-sent-text);
+    align-self: flex-end;
+    border-bottom-right-radius: 4px;
+}
+
+/* Mensagem recebida (de outro usuário) */
+.chat-mensagem-recebida {
+    background-color: var(--chat-message-received);
+    color: var(--chat-message-received-text);
+    align-self: flex-start;
+    border-bottom-left-radius: 4px;
+}
+
+.chat-mensagem-texto {
+    font-size: 0.875rem;
+    line-height: 1.4;
+}
+
+.chat-mensagem-hora {
+    font-size: 0.65rem;
+    opacity: 0.7;
+    text-align: right;
+    margin-top: 4px;
+}
+
+/* =============================================================================
+   FORMULÁRIO DE MENSAGEM
+   ============================================================================= */
+
+.chat-message-form {
+    padding: 8px;
+    border-top: 1px solid var(--chat-border);
+    flex-shrink: 0;
+}
+
+/* =============================================================================
+   SCROLLBAR CUSTOMIZADA
+   =============================================================================
+   Estilo mais discreto para barras de rolagem.
+*/
+
+.chat-conversas-list::-webkit-scrollbar,
+.chat-mensagens-list::-webkit-scrollbar,
+.chat-search-results::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chat-conversas-list::-webkit-scrollbar-track,
+.chat-mensagens-list::-webkit-scrollbar-track,
+.chat-search-results::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.chat-conversas-list::-webkit-scrollbar-thumb,
+.chat-mensagens-list::-webkit-scrollbar-thumb,
+.chat-search-results::-webkit-scrollbar-thumb {
+    background-color: #c1c1c1;
+    border-radius: 3px;
+}

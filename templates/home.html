@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block titulo %}Home{% endblock %}
+
+{% block head_extra %}
+<!-- CSS do Widget de Chat -->
+<link rel="stylesheet" href="/static/css/chat-widget.css">
+{% endblock %}
+
+<!-- Passa o ID do usuário para o JavaScript via data attribute -->
+{% block body_attrs %}data-usuario-id="{{ usuario_logado.id }}"{% endblock %}
+
+{% block content %}
+<!-- Navbar com nome do usuário e link de logout -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="/home">
+            <i class="bi bi-chat-dots"></i> Chat App
+        </a>
+
+        <div class="navbar-nav ms-auto">
+            <span class="navbar-text me-3">
+                <i class="bi bi-person-circle"></i> {{ usuario_logado.nome }}
+            </span>
+            <a class="nav-link text-light" href="/logout">
+                <i class="bi bi-box-arrow-right"></i> Sair
+            </a>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <!-- Mensagens Flash -->
+            {% for msg in mensagens %}
+            <div class="alert alert-{{ msg.tipo }} alert-dismissible fade show" role="alert">
+                {{ msg.texto }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            {% endfor %}
+
+            <!-- Card de boas-vindas -->
+            <div class="card">
+                <div class="card-body text-center py-5">
+                    <h2 class="mb-3">Bem-vindo(a), {{ usuario_logado.nome }}!</h2>
+                    <p class="text-muted mb-4">
+                        Use o widget de chat no canto inferior direito para conversar com outros usuários.
+                    </p>
+                    <p>
+                        <i class="bi bi-arrow-down-right display-4 text-primary"></i>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Inclui o Widget de Chat -->
+{% include "components/chat_widget.html" %}
+{% endblock %}
+
+{% block scripts %}
+<!-- JavaScript do Widget de Chat -->
+<script src="/static/js/chat-widget.js"></script>
+<script>
+    // Inicializa o widget quando o DOM estiver pronto
+    document.addEventListener('DOMContentLoaded', function() {
+        chatWidget.init();
+    });
+</script>
+{% endblock %}
